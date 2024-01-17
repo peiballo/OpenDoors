@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llamar a Webhook</title>
+</head>
+<body>
+
+<h2 class="wp-block-heading has-text-align-center margin-bottom-half" id="my-links" style="font-size:41px;line-height:1.25">Up2Malaga Rentals</h2>
+
+<p class="has-text-align-center"><mark style="background-color:rgba(0, 0, 0, 0);color:#ffffff" class="has-inline-color"><strong>Bienvenidos a Up to Malaga, en calle Reding 11, Apartamento 1º4.</strong></mark><br><strong>Para acceder al edificio, presione el siguiente boton y se abrira la puerta del portal o si quereis llamar al telefonillo al 1º4 ( codigo 2+[simbolo Campana]) y la puerta del portal se abrirá. </strong></p>
+
+
+<!-- Botón original -->
+<div class="wp-block-buttons alignfull">
+    <div class="wp-block-button">
+        <!-- Cambié el enlace <a> por un botón <button> -->
+        <button onclick="llamarWebhook()">Presionar para Abrir</button>
+    </div>
+</div>
+
+<script>
+    function llamarWebhook() {
+        var webhookURL = "https://api.nuki.io/smartlock/9406724490/action/unlock";
+        var requestOptions = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer 850fe95b7430535d794835f8c530f15969dd76678420584cf993a535c8bf126f1877371eff401d98',
+                'Content-Type': 'application/json'
+            }
+            // Puedes agregar más configuraciones según sea necesario
+        };
+
+        fetch(webhookURL, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del webhook:', data);
+            })
+            .catch(error => {
+                console.error('Error al llamar al webhook:', error);
+            });
+    }
+</script>
+
+<p class="has-text-align-center"><strong> A continuación, subir por las escaleras y a mano izquierda se encuentra la puerta del apartamento donde encontraréis un panel numérico donde introduciréis la contraseña proporcionada anteriormente y la puerta abrirá automáticamente.</strong></p>
+</body>
+</html>
+
