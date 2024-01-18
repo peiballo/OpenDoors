@@ -1,25 +1,66 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llamar a Webhook</title>
-</head>
-<body>
-
-<h2 class="wp-block-heading has-text-align-center margin-bottom-half" id="my-links" style="font-size:41px;line-height:1.25">Up2Malaga Rentals</h2>
-
-<p class="has-text-align-center"><mark style="background-color:rgba(0, 0, 0, 0);color:#ffffff" class="has-inline-color"><strong>Bienvenidos a Up to Malaga, en calle Reding 11, Apartamento 1º4.</strong></mark><br><strong>Para acceder al edificio, presione el siguiente boton y se abrira la puerta del portal o si quereis llamar al telefonillo al 1º4 ( codigo 2+[simbolo Campana]) y la puerta del portal se abrirá. </strong></p>
-
-
-<!-- Botón original -->
-<div class="wp-block-buttons alignfull">
-    <div class="wp-block-button">
-        <!-- Cambié el enlace <a> por un botón <button> -->
-        <button onclick="llamarWebhook()">Presionar para Abrir</button>
-    </div>
-</div>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button to Open Door</title>
+<style>
+  body {
+    background-color: #b3ecff; /* Color de fondo similar al de la imagen */
+    font-family: Arial, sans-serif; /* Fuente similar a la de la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .button-container {
+    background-color: #0056b3; /* Color de fondo del botón */
+    border-radius: 50%; /* Hace que el contenedor sea circular */
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: transform 0.1s; /* Suaviza la transición al escalar */
+  }
+  .button-container::before {
+    content: 'Push button';
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 24px;
+  }
+  .button-container::after {
+    content: 'to open door';
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 24px;
+  }
+  .button {
+    background-color: #cd7f32; /* Color de fondo del botón interno */
+    border: none;
+    border-radius: 50%; /* Hace que el botón sea circular */
+    width: 150px;
+    height: 150px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 150px; /* Centra verticalmente el texto en el botón */
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.1s; /* Suaviza las transiciones de transformación y color de fondo */
+  }
+  .button:active {
+    transform: scale(0.9); /* Reduce el tamaño del botón al hacer clic */
+    background-color: #b87333; /* Cambia el color para indicar que está presionado */
+  }
+</style>
 <script>
     function llamarWebhook() {
         var webhookURL = "https://api.nuki.io/smartlock/9406724490/action/unlock";
@@ -29,22 +70,24 @@
                 'Accept': 'application/json',
                 'Authorization': 'Bearer 850fe95b7430535d794835f8c530f15969dd76678420584cf993a535c8bf126f1877371eff401d98',
                 'Content-Type': 'application/json'
-            }
-            // Puedes agregar más configuraciones según sea necesario
+            },
+            body: JSON.stringify({ /* Your JSON payload here */ })
         };
-
+        
         fetch(webhookURL, requestOptions)
             .then(response => response.json())
-            .then(data => {
-                console.log('Respuesta del webhook:', data);
-            })
-            .catch(error => {
-                console.error('Error al llamar al webhook:', error);
-            });
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
     }
 </script>
-
-<p class="has-text-align-center"><strong> A continuación, subir por las escaleras y a mano izquierda se encuentra la puerta del apartamento donde encontraréis un panel numérico donde introduciréis la contraseña proporcionada anteriormente y la puerta abrirá automáticamente.</strong></p>
+</head>
+<body>
+<div class="button-container">
+  <div class="button" onclick="llamarWebhook()">
+    PRESS
+  </div>
+</div>
 </body>
 </html>
+
 
